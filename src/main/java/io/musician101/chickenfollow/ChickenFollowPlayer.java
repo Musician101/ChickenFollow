@@ -19,7 +19,7 @@ public class ChickenFollowPlayer extends EntityAIBase {
     }
 
     private Optional<EntityPlayer> getPriorityTarget() {
-        return ChickenFollow.INSTANCE.getTargets().stream().map(chicken.world::getPlayerEntityByName).filter(Objects::nonNull).filter(EntitySelectors.NOT_SPECTATING).filter(ep -> !ep.isCreative()).findFirst();
+        return ChickenFollow.instance().getTargets().stream().map(chicken.world::getPlayerEntityByName).filter(Objects::nonNull).filter(EntitySelectors.NOT_SPECTATING).filter(ep -> !ep.isCreative()).findFirst();
     }
 
     @Override
@@ -32,20 +32,20 @@ public class ChickenFollowPlayer extends EntityAIBase {
         Optional<EntityPlayer> target = getPriorityTarget();
         if (target.isPresent()) {
             this.target = target.get();
-            chicken.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(20);
+            chicken.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(20);
             return true;
         }
 
         this.target = null;
-        chicken.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(16);
+        chicken.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(16);
         return false;
     }
 
     @Override
-    public void updateTask() {
+    public void tick() {
         if (target == null) {
             chicken.getNavigator().setPath(null, 1D);
-            super.updateTask();
+            super.tick();
             return;
         }
 
