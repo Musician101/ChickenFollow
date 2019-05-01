@@ -44,7 +44,7 @@ minecraft {
             properties 'forge.logging.console.level': 'debug'
             workingDirectory project.file('run').canonicalPath
             source sourceSets.main
-            ideaModule "${project.getName()}.main"
+            ideaModule "${project.getName()}_main"
         }
         server = {
             // recommended logging data for a userdev environment
@@ -53,7 +53,7 @@ minecraft {
             properties 'forge.logging.console.level': 'debug'
             workingDirectory project.file('run').canonicalPath
             source sourceSets.main
-            ideaModule "${project.getName()}.main"
+            ideaModule "${project.getName()}_main"
         }
     }
 }
