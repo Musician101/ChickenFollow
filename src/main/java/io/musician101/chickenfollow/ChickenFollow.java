@@ -1,6 +1,5 @@
 package io.musician101.chickenfollow;
 
-import com.google.common.base.Predicates;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -50,7 +49,7 @@ public class ChickenFollow {
     private void preInit(FMLCommonSetupEvent event) {
         configDir = new File("config");
         loadConfig();
-        NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID), () -> VERSION, Predicates.alwaysTrue(), Predicates.alwaysTrue());
+        NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID), () -> VERSION, s -> true, s -> true);
     }
 
     private void onSpawn(EntityJoinWorldEvent event) {
