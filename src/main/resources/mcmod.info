@@ -1,0 +1,18 @@
+[
+    {
+        "modid": "chickenfollow",
+        "name": "ChickenFollow",
+        "description": "Designate people that get followed by chickens.",
+        "version": "${version}",
+        "mcversion": "${mcversion}",
+        "url": "",
+        "updateUrl": "",
+        "authorList": [
+            "Musician101"
+        ],
+        "credits": "",
+        "logoFile": "",
+        "screenshots": [],
+        "dependencies": []
+    }
+]
