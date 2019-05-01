@@ -23,6 +23,26 @@ version = '2.0'
 group = 'io.musician101.chickenfollow'
 archivesBaseName = 'chicken_follow'
 
+sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+compileJava {
+    def className = 'ChickenFollow.java'
+    def file = 'src/main/java/io/musician101/chickenfollow/' + className
+    def tempDir = 'build/tmp/sourcesCache'
+    doFirst {
+        copy {
+            from(file)
+            into(tempDir)
+        }
+        ant.replace(file: file, token: '@VERSION@', value: project.version)
+    }
+    doLast {
+        copy {
+            from(tempDir + '/' + className)
+            into(project.file(file).parent)
+        }
+    }
+}
+
 minecraft {
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
