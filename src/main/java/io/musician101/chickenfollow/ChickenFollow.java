@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.ModList;
@@ -54,12 +54,12 @@ public class ChickenFollow {
 
     private void onSpawn(EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();
-        if (!(entity instanceof EntityChicken)) {
+        if (!(entity instanceof ChickenEntity)) {
             return;
         }
 
-        EntityChicken chicken = (EntityChicken) entity;
-        chicken.targetTasks.addTask(0, new ChickenFollowPlayer(chicken));
+        ChickenEntity chicken = (ChickenEntity) entity;
+        chicken.targetSelector.addGoal(0, new ChickenFollowPlayer(chicken));
     }
 
     public void loadConfig() {
@@ -100,7 +100,7 @@ public class ChickenFollow {
         MinecraftForge.EVENT_BUS.addListener(this::onSpawn);
         event.getCommandDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("cfr").executes(context -> {
             loadConfig();
-            context.getSource().sendFeedback(new TextComponentString("ChickenFollow config reloaded."), true);
+            context.getSource().sendFeedback(new StringTextComponent("ChickenFollow config reloaded."), true);
             return 1;
         }));
     }

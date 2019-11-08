@@ -23,7 +23,7 @@ version = '2.0'
 group = 'io.musician101.chickenfollow'
 archivesBaseName = 'chicken_follow'
 
-sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
     def className = 'ChickenFollow.java'
     def file = 'src/main/java/io/musician101/chickenfollow/' + className
@@ -49,7 +49,7 @@ minecraft {
     // stable_#            stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not always work.
     // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'snapshot', version: '20190318-1.13.2'
+    mappings channel: 'snapshot', version: '20190719-1.14.3'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     //accessTransformer = file('my_at.cfg')
@@ -58,22 +58,48 @@ minecraft {
     // these can be tweaked, removed, or duplicated as needed.
     runs {
         client = {
+            workingDirectory project.file('run')
             // recommended logging data for a userdev environment
             properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP', 'forge.logging.noansi':'false'
             // recommended logging level for the console
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run').canonicalPath
-            source sourceSets.main
-            ideaModule "${project.getName()}_main"
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+            ideaModule project.group + "." + project.getName() + ".main"
         }
         server = {
+            workingDirectory project.file('run')
             // recommended logging data for a userdev environment
-            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP', 'forge.logging.noansi':'false'
+            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
             // recommended logging level for the console
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run').canonicalPath
-            source sourceSets.main
-            ideaModule "${project.getName()}_main"
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+            ideaModule project.group + "." + project.getName() + ".main"
+        }
+        data {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
+
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+            ideaModule project.group + "." + project.getName() + ".main"
         }
     }
 }
@@ -86,7 +112,21 @@ repositories {
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
-    minecraft 'net.minecraftforge:forge:1.13.2-25.0.191'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.85'
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title": "chicken_follow",
+                "Specification-Vendor": "Musician101",
+                "Specification-Version": "1", // We are version 1 of ourselves
+                "Implementation-Title": project.name,
+                "Implementation-Version": "${version}",
+                "Implementation-Vendor" :"Musician101",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
 }
 
 processResources {
