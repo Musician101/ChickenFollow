@@ -6,7 +6,7 @@
 # The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the minecraft version (without the 1.)
-loaderVersion="[31,)" #mandatory
+loaderVersion="[36,)" #mandatory
 # A text field displayed in the mod UI
 credits="" #optional
 # A text field displayed in the mod UI
@@ -14,10 +14,10 @@ authors="Musician101" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
-modId="chicken_follow" #mandatory
+modId="chickenfollow" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 version="$[version}" #mandatory
  # A display name for the mod
-displayName="chickenFollow" #mandatory
+displayName="ChickenFollow" #mandatory
 # The description text for the mod (multi line!) (#mandatory)
 description='Designate people that get followed by chickens.'

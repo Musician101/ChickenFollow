@@ -3,7 +3,7 @@ package io.musician101.chickenfollow;
 import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Optional;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,17 +28,18 @@ public class ChickenFollowPlayer extends Goal {
         return getPriorityTarget().map(PlayerEntity -> target.getUniqueID().equals(PlayerEntity.getUniqueID())).orElse(super.shouldContinueExecuting());
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public boolean shouldExecute() {
         Optional<? extends PlayerEntity> target = getPriorityTarget();
         if (target.isPresent()) {
             this.target = target.get();
-            chicken.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(20);
+            chicken.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(20);
             return true;
         }
 
         this.target = null;
-        chicken.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(16);
+        chicken.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(16);
         return false;
     }
 
